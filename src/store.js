@@ -6,6 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     calculatedBirthDate: '',
+    user: {
+      name: '',
+    },
   },
   mutations: {
     update(state, date) {
