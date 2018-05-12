@@ -5,12 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    calculatedBirthDate: '',
+    calculatedBirthDate: null,
     user: {
-      name: '',
+      name: null,
     },
   },
   mutations: {
+    updateName(state, object) {
+      this.replaceState(Object.assign(state, object));
+    },
     update(state, date) {
       // console.log(state);
       // localStorage.setItem('store', JSON.stringify(date));

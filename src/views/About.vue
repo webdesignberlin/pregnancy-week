@@ -1,52 +1,60 @@
 <template>
-  <div class="app-basic">
-    <appHeader />
+  <div class="app-calculate">
+    <appHeader :step="step" />
 
-    <div class="app-basic__content">
-      <label class="form-label" for="name">
-        Hallo, wie heißt du?
-      </label>
+    <div class="app-calculate__content">
+      <transition name="slidefade">
+        <div class="step step-1" v-if="step === '1'">
+          <label class="form-label" for="name">
+            Hallo, wie heißt du?
+          </label>
 
-      <input type="text"
-             placeholder="Maxi"
-             class="form-input"
-             :model="user.name"
-             :value="user.name"
-             id="name"
-             name="name">
+          <input type="text"
+                 placeholder="Maxi"
+                 class="form-input"
+                 :model="user.name"
+                 :value="user.name"
+                 @change="safeUserName($event.target.value)"
+                 id="name"
+                 name="name">
+        </div>
 
-      <h2 class="form-label">
-        Für deinen vorraussichtlichen Geburtstermin benötigen wir folgende Angaben:
-      </h2>
+        <div class="step step-2" v-else>
+          <h2 class="form-label">
+            Für deinen vorraussichtlichen Geburtstermin benötigen wir folgende Angaben:
+          </h2>
 
-      <div class="btn-group">
-        <label class="btn btn-group__item" for="startDate">
-          <span>Tag der letzten Periode</span>
-        </label>
-        <label class="btn btn-group__item" for="endDate">
-          <span>errechnetes Geburtstermin</span>
-        </label>
-      </div>
+          <div class="btn-group">
+            <label class="btn btn-group__item" for="startDate">
+              <span>Tag der letzten Periode</span>
+            </label>
+            <label class="btn btn--disabled btn-group__item" for="endDate">
+              <span>errechnetes Geburtstermin</span>
+            </label>
+          </div>
 
-      <input class="form-input"
-             id="startDate"
-             type="date"
-             :model="startDate"
-             :value="startDate"
-             @change="calculateBirthdate($event.target.value)">
+          <input class="form-input"
+                 id="startDate"
+                 type="date"
+                 :model="startDate"
+                 :value="startDate"
+                 @change="calculateBirthdate($event.target.value)">
 
-      <select class="form-input"
-              v-model="cycleLength">
-        <option value="-4">23</option>
-        <option value="-3">24</option>
-        <option value="-2">25</option>
-        <option value="-1">27</option>
-        <option value="0" selected>28</option>
-        <option value="1">29</option>
-        <option value="2">30</option>
-        <option value="3">31</option>
-        <option value="4">32</option>
-      </select>
+          <select class="form-input"
+                  v-model="cycleLength">
+            <option value="-4">23</option>
+            <option value="-3">24</option>
+            <option value="-2">25</option>
+            <option value="-1">27</option>
+            <option value="0" selected>28</option>
+            <option value="1">29</option>
+            <option value="2">30</option>
+            <option value="3">31</option>
+            <option value="4">32</option>
+          </select>
+        </div>
+
+      </transition>
 
       <p>{{ currentWeek.weeks }}
         <span v-if="currentWeek.days">+{{ currentWeek.days }}</span>
@@ -62,7 +70,7 @@
       <p>{{ startDate }} - {{ endDate }}</p>
     </div>
 
-    <div class="app-basic__submit">
+    <div class="app-calculate__submit">
       <button class="btn">Weiter</button>
     </div>
 
@@ -82,14 +90,13 @@ export default {
   data() {
     return {
       current: String,
-      user: {
-        name: this.$store.state.user.name,
-      },
+      user: this.$store.state.user,
       currentWeek: {},
       startDate: String,
       cycleLength: 0,
       endDate: this.$store.state.calculatedBirthDate,
       today: DateTime.local(),
+      step: !this.$store.state.user.name ? '1' : '2',
     };
   },
   mounted() {
@@ -100,6 +107,10 @@ export default {
     }
   },
   methods: {
+    safeUserName(name) {
+      this.user.name = name;
+      this.$store.commit('updateName', { user: this.user });
+    },
     calculateBirthdate(date) {
       const startDate = DateTime.fromISO(date);
       const calculatedDate = startDate
@@ -138,21 +149,21 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-  .app-basic {
+  .app-calculate {
     height: 100vh;
     display: grid;
     grid: [row1-start] "header header header" 110px [row1-end]
     [row2-start] ". content ." 1fr [row2-end]
     [row3-start] ". submit ." 90px [row3-end]
-          / auto 95% auto;
-  }
+          / minmax(2%, auto) minmax(auto, 650px) minmax(2%, auto);
 
-  .app-basic__content {
-    grid-area: content;
-  }
+    &__content {
+      grid-area: content;
+    }
 
-  .app-basic__submit {
-    grid-area: submit;
+    &__submit {
+      grid-area: submit;
+    }
   }
 
   /**
@@ -201,6 +212,7 @@ export default {
     &:disabled,
     &--disabled {
       background: #E6E6E6;
+      color: var(--color-primary);
     }
   }
 
@@ -228,5 +240,23 @@ export default {
         border-bottom-right-radius: var(--button-radius);
       }
     }
+  }
+
+  // the actual vue transition.
+  //
+  // enter-active, leave-active --> the transitions are currently active, make sure to
+  // transition.
+  //
+  .slidefade-enter-active, .slidefade-leave-active {
+    transition: all ease .4s;
+  }
+
+  //
+  // enter    --> enter-to  (start behind curtain, then onto stage)
+  // leave-to --> leave     (start on stage, move behind curtain  )
+  //
+  .slidefade-enter, .slidefade-leave-to {
+    transform: translate(30px);
+    opacity: 0;
   }
 </style>

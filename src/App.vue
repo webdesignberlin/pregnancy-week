@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>-->
-    <router-view/>
+    <transition name="fade" mode="out-in">
+      <router-view/>
+    </transition>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   </div>
 </template>
