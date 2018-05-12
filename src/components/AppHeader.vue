@@ -1,7 +1,12 @@
 <template>
     <header class="app-header">
-        <router-link to="/" class="app-header__back"><span class="sr-only">Back</span></router-link>
-        <h1 class="app-header__headline">Step 1/2</h1>
+        <router-link to="/" class="app-header__back" v-if="step === 1">
+            <span class="sr-only">Back to Home</span>
+        </router-link>
+        <button v-else class="app-header__back" @click.prevent="$parent.stepPrev()">
+            <span class="sr-only">Back to last Step</span>
+        </button>
+        <h1 class="app-header__headline">Step {{ step }}/2</h1>
     </header>
 </template>
 
@@ -9,7 +14,7 @@
 export default {
   name: 'AppHeader',
   props: {
-    msg: String,
+    step: Number,
   },
 };
 </script>
