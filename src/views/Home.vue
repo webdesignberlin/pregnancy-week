@@ -1,6 +1,8 @@
 <template>
   <div class="home">
+    <HelloUser v-if="user.name" />
     <HelloWorld
+      v-else
       headline="Schwangerschaftswoche berechnen"
       msg="Schön das du da bist, hier kannst du deine
       <abbr title='Schwangerschaftswoche'>SSW</abbr> berechnen" />
@@ -10,11 +12,18 @@
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
+import HelloUser from '@/components/HelloUser.vue';
 
 export default {
   name: 'home',
   components: {
     HelloWorld,
+    HelloUser,
+  },
+  data() {
+    return {
+      user: this.$store.state.user,
+    };
   },
 };
 </script>
