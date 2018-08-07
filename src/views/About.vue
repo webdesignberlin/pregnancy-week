@@ -56,7 +56,7 @@
 
       </transition>
 
-      <p>{{ currentWeek.weeks }}
+      <p v-if="currentWeek">{{ currentWeek.weeks }}
         <span v-if="currentWeek.days">+{{ currentWeek.days }}</span>
       </p>
 
