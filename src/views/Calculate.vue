@@ -102,10 +102,8 @@
 </template>
 
 <script>
-import { DateTime } from 'luxon';
 import AppHeader from '@/components/AppHeader.vue';
-
-DateTime.local();
+import Dates from '@/helper/date';
 
 export default {
   components: {
@@ -119,7 +117,7 @@ export default {
       startDate: null,
       cycleLength: 0,
       endDate: this.$store.state.calculatedBirthDate,
-      today: DateTime.local(),
+      today: Dates.getToday(),
       stepMax: 3,
       step: !this.$store.state.user.name ? 1 : 3,
       selectedDateType: 'startDate',
@@ -128,14 +126,12 @@ export default {
   mounted() {
     this.$store.commit('initialiseStore');
     if (this.$store.state.calculatedBirthDate) {
-      console.log('bin da');
       this.calculateLastDayOfPeriod(this.endDate);
     }
   },
   methods: {
     switchDateType(string) {
       this.selectedDateType = string;
-      console.log(this.$refs[string]);
       this.$nextTick(() => {
         this.$refs[string].focus();
       });
@@ -145,38 +141,20 @@ export default {
       this.$store.commit('updateName', { user: this.user });
     },
     calculateBirthdate(date) {
-      const startDate = DateTime.fromISO(date);
-      const calculatedDate = startDate
-        .plus({ day: 7 })
-        .minus({ month: 3 })
-      // .plus({ day: this.cycleLength })
-        .plus({ year: 1 })
-        .toISODate();
-        // this.$store.commit('updateCalculatedBirthdate', calculatedDate);
       this.startDate = date;
-      this.endDate = calculatedDate;
+      this.endDate = Dates.calculateDateOfBirth(date);
       this.calculateCurrentWeek(date);
     },
     calculateLastDayOfPeriod(date) {
-      const endDate = DateTime.fromISO(date);
-      const calculatedDate = endDate
-        .minus({ day: 6 })
-        .plus({ month: 3 })
-      // .minus({ day: this.cycleLength })
-        .minus({ year: 1 })
-        .toISODate();
       this.endDate = date;
-      this.startDate = calculatedDate;
-      this.calculateCurrentWeek(calculatedDate);
+      this.startDate = Dates.calculateLastDayOfPeriod(date);
+      this.calculateCurrentWeek(Dates.calculateLastDayOfPeriod(date));
     },
     calculateCurrentWeek(date) {
-      const end = DateTime.fromISO(this.today.toISODate());
-      const start = DateTime.fromISO(date);
-
       this.$store.commit('update', this.endDate);
       // localStorage.setItem('store', JSON.stringify(this.endDate));
 
-      this.currentWeek = end.diff(start, ['weeks', 'days']); //= > { months: 1, days: 2 }
+      this.currentWeek = Dates.calculateCurrentWeek(date); //= > { months: 1, days: 2 }
     },
     stepPrev() {
       this.step -= 1;
