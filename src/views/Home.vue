@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld
+      headline="Schwangerschaftswoche berechnen"
+      msg="Schön das du da bist, hier kannst du deine
+      <abbr title='Schwangerschaftswoche'>SSW</abbr> berechnen" />
   </div>
 </template>
 
@@ -16,3 +18,15 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="scss">
+  .home {
+    display: grid;
+    align-content: center;
+    justify-content: center;
+
+    min-height: 100vh;
+    background: rgb(255,174,138);
+    background: linear-gradient(135deg, rgba(255,174,138,1) 0%,rgba(255,191,184,1) 100%);
+  }
+</style>
