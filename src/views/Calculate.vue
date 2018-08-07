@@ -1,6 +1,6 @@
 <template>
     <div class="app-calculate">
-        <appHeader :step="step" />
+        <appHeader :step="step" :stepMax="stepMax" />
 
         <div class="app-calculate__content">
             <div class="step step-1" v-show="step === 1">
@@ -80,15 +80,21 @@
                 </div>
             </div>
 
+            <div class="step step-3" v-show="step === 3">
+                <h1>Herzlichen Glückwunsch!</h1>
+                <p>Du befindest dich in der <strong>{{ currentWeek.weeks }}
+                    <span v-if="currentWeek.days">+{{ currentWeek.days }}</span>
+                    Schwangerschaftswoche </strong>.
+                </p>
 
-            <p>{{ currentWeek.weeks }}
-                <span v-if="currentWeek.days">+{{ currentWeek.days }}</span>
-            </p>
-
-            <p>{{ startDate }} - {{ endDate }}</p>
+                <p>{{ startDate }} - {{ endDate }}</p>
+            </div>
         </div>
 
-        <div class="app-calculate__submit">
+        <div class="app-calculate__submit" v-if="step === stepMax">
+            <button class="btn" @click.prevent="stepPrev()">zurück</button>
+        </div>
+        <div class="app-calculate__submit" v-else>
             <button class="btn" @click.prevent="stepNext()">Weiter</button>
         </div>
 
@@ -114,7 +120,8 @@ export default {
       cycleLength: 0,
       endDate: this.$store.state.calculatedBirthDate,
       today: DateTime.local(),
-      step: !this.$store.state.user.name ? 1 : 2,
+      stepMax: 3,
+      step: !this.$store.state.user.name ? 1 : 3,
       selectedDateType: 'startDate',
     };
   },
@@ -175,8 +182,9 @@ export default {
       this.step -= 1;
     },
     stepNext() {
-      this.step += 1;
-      console.log(typeof this.step);
+      if (this.step < this.stepMax) {
+        this.step += 1;
+      }
     },
   },
 };

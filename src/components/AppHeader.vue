@@ -6,7 +6,7 @@
         <button v-else class="app-header__back" @click.prevent="$parent.stepPrev()">
             <span class="sr-only">Back to last Step</span>
         </button>
-        <h1 class="app-header__headline">Step {{ step }}/2</h1>
+        <h1 class="app-header__headline">Step {{ step }}/{{ stepMax}}</h1>
     </header>
 </template>
 
@@ -15,6 +15,7 @@ export default {
   name: 'AppHeader',
   props: {
     step: Number,
+    stepMax: Number,
   },
 };
 </script>
@@ -40,11 +41,10 @@ export default {
         font-size: 17px;
         font-weight: 700;
         color: #fff;
-        background: url('../assets/header.svg') center bottom repeat-x;
-        background-size: cover;
+        background: #FFAE8A;
         height: 110px;
-        /*clip-path: polygon(100% 65%, 100% 0%, 0% 0%, 0% 87%, 3%
+        /* clip-path: polygon(100% 65%, 100% 0%, 0% 0%, 0% 87%, 3%
         91%, 7% 95%, 12% 98%, 17% 100%, 22% 99%, 28% 97%, 36% 94%,
-        43% 93%, 53% 87%, 61% 80%, 70% 71%, 78% 64%, 85% 60%, 92% 58%);*/
+        43% 93%, 53% 87%, 61% 80%, 70% 71%, 78% 64%, 85% 60%, 92% 58%); */
     }
 </style>
