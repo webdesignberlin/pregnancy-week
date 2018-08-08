@@ -93,21 +93,24 @@
         </div>
 
         <div class="app-calculate__submit" v-if="step === stepMax">
-            <button class="btn" @click.prevent="stepPrev()">zurück</button>
+            <ui-btn @click.prevent="stepPrev()">zurück</ui-btn>
         </div>
         <div class="app-calculate__submit" v-else>
-            <button class="btn" @click.prevent="stepNext()">Weiter</button>
+            <p>{{ disableStepNext }}</p>
+            <ui-btn :disabled="isNextStepDisabled()" @click.prevent="stepNext()">Weiter</ui-btn>
         </div>
 
     </div>
 </template>
 
 <script>
-import AppHeader from '@/components/AppHeader.vue';
 import Dates from '@/helper/date';
+import AppHeader from '@/components/AppHeader.vue';
+import UiBtn from '@/components/ui/button.vue';
 
 export default {
   components: {
+    UiBtn,
     AppHeader,
   },
   data() {
@@ -121,6 +124,7 @@ export default {
       today: Dates.getToday(),
       stepMax: 3,
       step: !this.$store.state.user.name ? 1 : 3,
+      disableStepNext: null,
       selectedDateType: 'startDate',
     };
   },
@@ -136,6 +140,9 @@ export default {
       this.$nextTick(() => {
         this.$refs[string].focus();
       });
+    },
+    isNextStepDisabled() {
+      return this.step === 2 && !this.startDate;
     },
     safeUserName(name) {
       this.user.name = name;
