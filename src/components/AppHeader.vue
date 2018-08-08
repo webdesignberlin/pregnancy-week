@@ -24,9 +24,6 @@ export default {
 <style scoped lang="scss">
     .app-header__back {
         grid-area: back;
-        display: inline-block;
-        width: 12px;
-        height: 21px;
         background: url('../assets/icon-back.svg') 50% no-repeat;
         padding: 2rem;
     }
@@ -39,7 +36,7 @@ export default {
 
         display: grid;
         grid: [header1-start] "back headline ." 110px [header1-end]
-          / 20px auto 20px;
+          / minmax(20px, 4rem) auto minmax(20px, 4rem);
         align-items: center;
 
         height: 110px;
