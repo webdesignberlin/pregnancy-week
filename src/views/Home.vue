@@ -3,9 +3,10 @@
     <HelloUser v-if="user.name" />
     <HelloWorld
       v-else
-      headline="Schwangerschaftswoche berechnen"
-      msg="Schön das du da bist, hier kannst du deine
-      <abbr title='Schwangerschaftswoche'>SSW</abbr> berechnen" />
+      headline="Schwangerschaftswoche berechnen">
+      <p>Schön das du da bist, hier kannst du deine
+        <abbr title='Schwangerschaftswoche'>SSW</abbr> berechnen</p>
+    </HelloWorld>
   </div>
 </template>
 
