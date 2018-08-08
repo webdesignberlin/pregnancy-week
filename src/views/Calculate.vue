@@ -13,6 +13,7 @@
                        class="form-input"
                        :model="user.name"
                        :value="user.name"
+                       @keyup.enter="stepNext()"
                        @change="safeUserName($event.target.value)"
                        id="name"
                        name="name">
