@@ -174,10 +174,11 @@ export default {
         grid: [row1-start] "header header header" 110px [row1-end]
         [row2-start] ". content ." 1fr [row2-end]
         [row3-start] ". submit ." 90px [row3-end]
-          / minmax(2%, auto) minmax(auto, 650px) minmax(2%, auto);
+          / minmax(20px, auto) minmax(auto, 650px) minmax(20px, auto);
 
         &__content {
             grid-area: content;
+            padding-top: 4rem;
         }
 
         &__submit {
