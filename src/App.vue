@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!--<div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>-->
     <transition name="fade" mode="out-in">
       <router-view/>
     </transition>
@@ -14,6 +10,7 @@
 <style lang="scss">
 :root {
   --color-primary: #7BA9E8;
+  --color-text: #33334B;
 }
 
 *,
@@ -40,17 +37,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #33334B;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  color: var(--color-text);
 }
 
 .sr-only {
