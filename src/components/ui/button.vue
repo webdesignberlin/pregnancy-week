@@ -1,5 +1,6 @@
 <template>
   <button
+    @click="callback($event)"
     :class="type"
     :disabled="disabled">
     <slot></slot>
@@ -12,6 +13,12 @@ export default {
   props: {
     type: String,
     disabled: Boolean,
+  },
+  methods: {
+    callback(e) {
+      const vm = this;
+      vm.$emit('click', e);
+    },
   },
 };
 </script>
