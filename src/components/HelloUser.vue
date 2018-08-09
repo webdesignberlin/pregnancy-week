@@ -2,15 +2,19 @@
   <article>
     <h1>Hallo {{ user.name }}</h1>
     <slot></slot>
-    <p>
-      <router-link :to="'Calculate'" class="btn">zum Ergebnis</router-link>
-    </p>
+
+    <router-link :to="'Calculate'" tag="div">
+      <ui-btn type="inverted">zum Ergebnis</ui-btn>
+    </router-link>
   </article>
 </template>
 
 <script>
+import UiBtn from './ui/button.vue';
+
 export default {
   name: 'HelloUser',
+  components: { UiBtn },
   data() {
     return {
       user: this.$store.state.user,
