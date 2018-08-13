@@ -182,7 +182,7 @@ export default {
             transform: translateY(-100%);
         }
         90% {
-            transform: translateY(100%);
+            transform: translateY(var(--animated-header-height));
             border-width: inherit;
         }
         100% {
