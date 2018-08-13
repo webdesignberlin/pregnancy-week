@@ -50,9 +50,32 @@ function calculateLastDayOfPeriod(dateOfBirth) {
     .toISODate();
 }
 
+/**
+ * Calculate Days to given End Date
+ * @param date
+ * @returns {number}
+ */
+function getDaysTo(date) {
+  const dateDiff = DateTime.fromISO(date).diff(DateTime.local(), 'days').toObject();
+  return Math.floor(dateDiff.days);
+}
+
+/**
+ * Is it time for night mode?
+ * @returns {boolean}
+ */
+function isNightMode() {
+  // Interval.fromDateTimes(dt2, dt3).contains(DateTime.local());
+  const now = DateTime.local().toLocaleString(DateTime.TIME_24_SIMPLE);
+  const night = '18:25';
+  return now > night;
+}
+
 export default {
   getToday,
   calculateCurrentWeek,
   calculateDateOfBirth,
   calculateLastDayOfPeriod,
+  isNightMode,
+  getDaysTo,
 };
