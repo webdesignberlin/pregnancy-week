@@ -68,7 +68,7 @@ export default {
 </script>
 <style scoped lang="scss">
     .app-result {
-        --animated-header-height: 400px;
+        --animated-header-height: 20vh;
     }
 
     .header-wrapper {
