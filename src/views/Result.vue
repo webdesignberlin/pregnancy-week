@@ -2,15 +2,15 @@
     <div class="app-result">
         <appHeader />
 
-        <div class="animated-header"
-             v-bind:class="{ 'animated-header--night' : nightIsActive }"
-             @click="getNight()">
-            <div class="animated-header__sky"></div>
-            <div class="animated-header__sun"></div>
-            <div class="animated-header__moon"></div>
-        </div>
+        <div class="header-wrapper">
+            <div class="animated-header"
+                 v-bind:class="{ 'animated-header--night' : nightIsActive }"
+                 @click="getNight()">
+                <div class="animated-header__sky"></div>
+                <div class="animated-header__sun"></div>
+                <div class="animated-header__moon"></div>
+            </div>
 
-        <div class="app-result__content">
             <div class="result">
                 <div class="result__count">
                     <span class="result__weeks">{{ currentWeek.weeks }}</span>
@@ -20,6 +20,11 @@
                 </div>
                 <abbr class="result__title" title="Schwangerschaftswoche">SSW</abbr>
             </div>
+        </div>
+
+        <div class="app-result__content">
+            <h1>{{ user.name }}</h1>
+            <p>bald ist es soweit! Noch {{ daysLeft }} Tage bis zum errechneten Geburtstermin.</p>
         </div>
 
     </div>
@@ -40,7 +45,8 @@ export default {
       user: this.$store.state.user,
       currentWeek: {},
       endDate: this.$store.state.calculatedBirthDate,
-      nightIsActive: false,
+      nightIsActive: Dates.isNightMode(),
+      daysLeft: Dates.getDaysTo(this.$store.state.calculatedBirthDate),
     };
   },
   mounted() {
@@ -61,8 +67,16 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-    /* Icon design greatly inspired by an svg created by Garrett Knoll: https://thenounproject.com/g_a.k_/uploads/?i=218424 */
+    .app-result {
+        --animated-header-height: 400px;
+    }
 
+    .header-wrapper {
+        grid-area: intro;
+        max-height: var(--animated-header-height);
+        position: relative;
+    }
+    /* Icon design greatly inspired by an svg created by Garrett Knoll: https://thenounproject.com/g_a.k_/uploads/?i=218424 */
     .animated-header {
         --light: #CBE2FF;
         --accent: #B9C1D0;
@@ -77,14 +91,13 @@ export default {
 
         clip-path: polygon(0 0, 100% 0, 100% 80%, 0 100%);
 
-        position: relative;
+        position: fixed;
         width: 100vw;
-        height: 400px;
+        height: var(--animated-header-height);
         transform: translate3d(0, 0, 0);
         overflow: hidden;
         padding: 0;
         background-clip: padding-box;
-        grid-area: intro;
         // grid-column: 1 / 3;
         // grid-row: 2;
 
@@ -164,6 +177,20 @@ export default {
         }
     }
 
+    @keyframes getIn {
+        0% {
+            transform: translateY(-100%);
+        }
+        90% {
+            transform: translateY(100%);
+            border-width: inherit;
+        }
+        100% {
+            transform: translateY(100%);
+            border-width: 1em;
+        }
+    }
+
     @keyframes loopIn {
         0% {
             transform: rotate(50deg) translateZ(0);
@@ -238,11 +265,13 @@ export default {
         justify-content: center;
         width: var(--result-size);
         height: var(--result-size);
-        border: 1px solid #000;
+        margin: 0 auto;
+        border: 1px solid var(--color-primary);
         border-radius: 50%;
         background-color: #fff;
         opacity: 1;
-        animation: loopIn 1s both ease-out;
+        transform: translate3d(0, 0, 0);
+        animation: getIn 1s both ease-out;
         transform-origin: -200% 0;
 
         grid: [rowCount-start] "count" 1fr [rowCount-end]
@@ -282,16 +311,14 @@ export default {
         height: 100vh;
         display: grid;
         grid: [row1-start] "header header header" 110px [row1-end]
-        [row2-start] "intro intro intro" 600px [row2-end]
+        [row2-start] "intro intro intro" var(--animated-header-height) [row2-end]
         [row3-start] ". content ." 1fr [row3-end]
           / minmax(20px, auto) minmax(auto, 650px) minmax(20px, auto);
 
         &__content {
             grid-area: content;
-            grid-row: 2;
             justify-self: center;
             align-self: center;
-            overflow: hidden;
         }
     }
 
