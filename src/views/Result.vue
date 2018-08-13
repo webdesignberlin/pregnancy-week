@@ -186,7 +186,7 @@ export default {
             border-width: inherit;
         }
         100% {
-            transform: translateY(100%);
+            transform: translateY(var(--animated-header-height));
             border-width: 1em;
         }
     }
