@@ -3,7 +3,7 @@
     <h1>Hallo {{ user.name }}</h1>
     <slot></slot>
 
-    <router-link :to="'Calculate'" tag="div">
+    <router-link :to="'result'" tag="div">
       <ui-btn type="inverted">zum Ergebnis</ui-btn>
     </router-link>
   </article>
