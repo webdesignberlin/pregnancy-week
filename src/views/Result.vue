@@ -68,7 +68,8 @@ export default {
 </script>
 <style scoped lang="scss">
     .app-result {
-        --animated-header-height: 20vh;
+        --animated-header-height: 30vh;
+        --result-size: 248px;
     }
 
     .header-wrapper {
@@ -182,11 +183,11 @@ export default {
             transform: translateY(-100%);
         }
         90% {
-            transform: translateY(var(--animated-header-height));
+            transform: translateY(calc(var(--result-size) / 2));
             border-width: inherit;
         }
         100% {
-            transform: translateY(var(--animated-header-height));
+            transform: translateY(calc(var(--result-size) / 2));
             border-width: 1em;
         }
     }
@@ -258,8 +259,6 @@ export default {
     }
 
     .result {
-        --result-size: 248px;
-
         display: grid;
         align-content: center;
         justify-content: center;
