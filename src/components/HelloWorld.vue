@@ -1,6 +1,6 @@
 <template>
   <article>
-    <h1>{{ headline }}</h1>
+    <h1 v-html="headline"></h1>
     <slot></slot>
     <p>
       <router-link :to="'Calculate'" tag="div">
@@ -24,7 +24,16 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-article {
-  padding: 2rem;
-}
+  h1 {
+    font-size: 2.5rem; // 40px
+  }
+
+  article {
+    padding: 2rem;
+  }
+
+  p {
+    margin-top: 20px;
+    margin-bottom: 50px;
+  }
 </style>

@@ -27,10 +27,10 @@ export default {
 <style scoped lang="scss">
 button {
   --button-radius: 25px;
-  --button-background: var(--color-primary, #7BA9E8);
-  --button-background--disabled: #E6E6E6;
+  --button-background: var(--color-link, #D60266);
+  --button-background--disabled: var(--color-button--inactive, #E6E6E6);
   --button-color: #fff;
-  --button-color--disabled: #9B9B9B;
+  --button-color--disabled: var(--color-copy, #292929);
 
   display: block;
   width: 100%;

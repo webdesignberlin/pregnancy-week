@@ -24,6 +24,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+  h1 {
+    font-size: 2.5rem; // 40px
+  }
+
   article {
     padding: 2rem;
   }
