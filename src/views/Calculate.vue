@@ -186,7 +186,7 @@ export default {
 
         &__content {
             grid-area: content;
-            padding-top: 4rem;
+            padding-top: 8rem;
         }
 
         &__submit {
@@ -216,7 +216,7 @@ export default {
         padding: 11px;
         margin-bottom: 40px;
 
-        border-bottom: solid 2px var(--color-primary);
+        border-bottom: solid 2px var(--color-link);
         appearance: none;
         /**
          * Remove default box-shadow for required pseudo classes

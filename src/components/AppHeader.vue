@@ -7,7 +7,7 @@
       <span class="sr-only">Back to last Step</span>
     </button>
     <h1 class="app-header__headline">Step {{ step }}/{{ stepMax}}</h1>
-    <svg viewBox="0 104 375 152" xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox="0 104 375 152" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none slice">
       <path
         d="M0 0v139.26c73.144 19.536 148.31 16.604
         225.496-8.798 77.186-25.401 127.02-31.796 149.504-19.184V0H0z"
@@ -65,6 +65,7 @@ export default {
   svg {
     align-self: baseline;
     grid-area: bottom;
+    height: 100px;
     width: 100%;
 
     path {
