@@ -1,9 +1,10 @@
 <template>
   <div class="home">
+    <app-logo></app-logo>
     <HelloUser v-if="user.name" />
     <HelloWorld
       v-else
-      headline="Schwangerschaftswoche berechnen">
+      headline="Schwanger<wbr>schafts<wbr>woche berechnen">
       <p>Schön das du da bist, hier kannst du deine
         <abbr title='Schwangerschaftswoche'>SSW</abbr> berechnen</p>
     </HelloWorld>
@@ -14,10 +15,12 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
 import HelloUser from '@/components/HelloUser.vue';
+import AppLogo from '@/components/AppLogo.vue';
 
 export default {
   name: 'home',
   components: {
+    AppLogo,
     HelloWorld,
     HelloUser,
   },
@@ -34,9 +37,10 @@ export default {
     display: grid;
     align-content: center;
     justify-content: center;
+    text-align: center;
 
     min-height: 100vh;
-    background: rgb(255,174,138);
-    background: linear-gradient(135deg, rgba(255,174,138,1) 0%,rgba(255,191,184,1) 100%);
+    background: var(--color-primary);
+    color: var(--color-copy--inverted);
   }
 </style>
