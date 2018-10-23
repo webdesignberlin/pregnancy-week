@@ -9,8 +9,11 @@
 
 <style lang="scss">
 :root {
-  --color-primary: #7BA9E8;
-  --color-text: #33334B;
+  --color-primary: #30015F;
+  --color-link: #D60266;
+  --color-button--inactive: #E6E6E6;
+  --color-copy: #292929;
+  --color-copy--inverted: #fff;
 }
 
 *,
@@ -33,11 +36,12 @@ body {
 }
 
 #app {
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: var(--color-text);
+  color: var(--color-copy);
+  font-size: 1.0625rem; // 17px
 }
 
 .sr-only {
